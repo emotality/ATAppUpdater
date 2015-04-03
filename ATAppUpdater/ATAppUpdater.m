@@ -50,7 +50,7 @@
 		NSDictionary *appDetails = [[jsonResults objectForKey:@"results"] firstObject];
 		NSString *appItunesUrl = [[appDetails objectForKey:@"trackViewUrl"] stringByReplacingOccurrencesOfString:@"&uo=4" withString:@""];
 		NSString *latestVersion = [appDetails objectForKey:@"version"];
-		if (![latestVersion isEqualToString:currentVersion]) {
+		if ([latestVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending) {
 			block(YES, appItunesUrl, latestVersion);
 		} else {
 			block(NO, nil, currentVersion);
