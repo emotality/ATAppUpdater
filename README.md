@@ -19,7 +19,7 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
    return YES;
 }
 ````
-![alt tag](http://www.emotality.com/stackoverflow/ATAppUpdater/ATAppUpdater1.png)
+![alt tag](http://www.apptality.co.za/images/github/ATAppUpdater1.png)
 
 -
 
@@ -30,13 +30,25 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
    return YES;
 }
 ````
-![alt tag](http://www.emotality.com/stackoverflow/ATAppUpdater/ATAppUpdater2.png)
+![alt tag](http://www.apptality.co.za/images/github/ATAppUpdater2.png)
 
 ## Installation
 
+### *Manual*
+
 - Copy `ATAppUpdater` folder in your project
+- Link `SystemConfiguration.framework`
+- `#import "ATAppUpdater.h"` in the required class
+
+### *CocoaPods*
+
+- Add to podfile: `pod 'ATAppUpdater', '~> 1.2'`
 - `#import "ATAppUpdater.h"` in the required class
 
 ## Credits
 
 - Reachability: <https://github.com/tonymillion/Reachability>
+
+## License
+
+ATAppUpdater is released under the MIT license. See LICENSE for details.
