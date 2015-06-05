@@ -1,4 +1,4 @@
-# ATAppUpdater
+# ATAppUpdater 1.2
 Checks if there is a newer version of your app in the AppStore and alerts the user to update.
 
 ## Features
@@ -34,13 +34,13 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
 
 ## Installation
 
-### *Manual*
+**Manual:**
 
 - Copy `ATAppUpdater` folder in your project
 - Link `SystemConfiguration.framework`
 - `#import "ATAppUpdater.h"` in the required class
 
-### *CocoaPods*
+**CocoaPods:**
 
 - Add to podfile: `pod 'ATAppUpdater', '~> 1.2'`
 - `#import "ATAppUpdater.h"` in the required class
