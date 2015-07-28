@@ -36,6 +36,7 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
 
 **Manual:**
 
+- Install Reachability code into your project: <https://github.com/tonymillion/Reachability>
 - Copy `ATAppUpdater` folder in your project
 - Link `SystemConfiguration.framework`
 - `#import "ATAppUpdater.h"` in the required class
