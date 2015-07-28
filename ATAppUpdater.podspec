@@ -15,5 +15,6 @@ Pod::Spec.new do |s|
   s.source_files	= 'ATAppUpdater/*.{m,h}'
   s.public_header_files = 'ATAppUpdater/*.h'
   s.frameworks 		= 'UIKit', 'SystemConfiguration'
-  s.dependency	= 'Reachability'
+
+  s.dependency 'Reachability'
 end
