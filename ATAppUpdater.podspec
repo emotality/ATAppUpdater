@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name	= "ATAppUpdater"
-  s.version	= "1.2"
+  s.version	= "1.3"
   s.license	= 'MIT'
   s.summary	= "Checks if there is a newer version of your app in the AppStore and alerts the user to update the app."
   s.homepage	= "https://github.com/emotality/ATAppUpdater"
@@ -15,4 +15,6 @@ Pod::Spec.new do |s|
   s.source_files	= 'ATAppUpdater/*.{m,h}'
   s.public_header_files = 'ATAppUpdater/*.h'
   s.frameworks 		= 'UIKit', 'SystemConfiguration'
+
+  s.dependency 'Reachability'
 end
