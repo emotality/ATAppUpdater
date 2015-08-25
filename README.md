@@ -1,4 +1,4 @@
-# ATAppUpdater 1.3
+# ATAppUpdater 1.4
 Checks if there is a newer version of your app in the AppStore and alerts the user to update.
 
 ## Features
@@ -9,6 +9,8 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
 - Opens app in AppStore from alert
 - Choose not to update now or force user to update
 - Thread-safe
+
+##### *Note: Might not work with simulators, please test on an actual device.*
 
 ## Examples
 
@@ -43,7 +45,7 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
 
 **CocoaPods:**
 
-- Add to podfile: `pod 'ATAppUpdater', '~> 1.3'`
+- Add to podfile: `pod 'ATAppUpdater', '~> 1.4'`
 - `#import "ATAppUpdater.h"` in the required class
 
 ## License

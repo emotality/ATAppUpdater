@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name        = "ATAppUpdater"
-  s.version     = "1.3"
+  s.version     = "1.4"
   s.summary     = "Checks if there is a newer version of your app in the AppStore and alerts the user to update the app."
   s.homepage    = "https://github.com/apptality/ATAppUpdater"
   s.screenshots = "http://www.apptality.co.za/images/github/ATAppUpdater1.png", "http://www.apptality.co.za/images/github/ATAppUpdater2.png"

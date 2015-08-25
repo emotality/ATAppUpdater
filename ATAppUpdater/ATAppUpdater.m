@@ -41,8 +41,10 @@
 
 - (void)forceOpenNewAppVersion:(BOOL)force
 {
+    // Reachability might not work with Simulators, please test on an actual device.
     Reachability *connection = [Reachability reachabilityWithHostname:@"itunes.apple.com"];
-    BOOL hasConnection = [connection isReachable];
+    BOOL hasConnection = NO;
+    hasConnection = [connection isReachable];
     if (!hasConnection) return;
     
     [self checkNewAppVersionWithBlock:^(BOOL newVersion, NSString *appUrl, NSString *version) {
@@ -56,7 +58,13 @@
     NSString *bundleIdentifier = [bundleInfo valueForKey:@"CFBundleIdentifier"];
     NSString *currentVersion = [bundleInfo objectForKey:@"CFBundleShortVersionString"];
     NSURL *lookupURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", bundleIdentifier]];
+    
     NSData *lookupResults = [NSData dataWithContentsOfURL:lookupURL];
+    if (!lookupResults) {
+        block(NO, nil, currentVersion);
+        return;
+    }
+    
     NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:lookupResults options:0 error:nil];
     
     NSUInteger resultCount = [[jsonResults objectForKey:@"resultCount"] integerValue];
