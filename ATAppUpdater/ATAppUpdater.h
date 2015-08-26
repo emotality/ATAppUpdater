@@ -24,7 +24,7 @@
 */
 
 #import <UIKit/UIKit.h>
-#import "Reachability.h"
+#import <Reachability/Reachability.h>
 
 @interface ATAppUpdater : NSObject
 
