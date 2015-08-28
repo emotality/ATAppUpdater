@@ -39,16 +39,30 @@
 }
 
 
+- (BOOL)hasConnection
+{
+    const char *host = "itunes.apple.com";
+    BOOL reachable;
+    BOOL success;
+    
+    // Needs SystemConfiguration.framework! <SystemConfiguration/SystemConfiguration.h>
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, host);
+    SCNetworkReachabilityFlags flags;
+    success = SCNetworkReachabilityGetFlags(reachability, &flags);
+    reachable = success && (flags & kSCNetworkFlagsReachable) && !(flags & kSCNetworkFlagsConnectionRequired);
+    CFRelease(reachability);
+    return reachable;
+}
+
 - (void)forceOpenNewAppVersion:(BOOL)force
 {
-    // Reachability might not work with Simulators, please test on an actual device.
-    Reachability *connection = [Reachability reachabilityWithHostname:@"itunes.apple.com"];
-    BOOL hasConnection = NO;
-    hasConnection = [connection isReachable];
+    BOOL hasConnection = [self hasConnection];
     if (!hasConnection) return;
     
     [self checkNewAppVersionWithBlock:^(BOOL newVersion, NSString *appUrl, NSString *version) {
-        if (newVersion) [[ATUpdateAlert alertUpdateForVersion:version withURL:appUrl withForce:force] show];
+        if (newVersion) {
+            [[ATUpdateAlert alertUpdateForVersion:version withURL:appUrl withForce:force] show];
+        }
     }];
 }
 

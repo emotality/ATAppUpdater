@@ -1,4 +1,4 @@
-# ATAppUpdater 1.4
+# ATAppUpdater 1.5
 Checks if there is a newer version of your app in the AppStore and alerts the user to update.
 
 ## Features
@@ -9,8 +9,6 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
 - Opens app in AppStore from alert
 - Choose not to update now or force user to update
 - Thread-safe
-
-##### *Note: Might not work with simulators, please test on an actual device.*
 
 ## Examples
 
@@ -38,14 +36,13 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
 
 **Manual:**
 
-- Copy [Reachability](https://github.com/tonymillion/Reachability) files into your project
 - Copy `ATAppUpdater` folder into your project
 - Link `SystemConfiguration.framework`
 - `#import "ATAppUpdater.h"` in the required class
 
 **CocoaPods:**
 
-- Add to podfile: `pod 'ATAppUpdater', '~> 1.4'`
+- Add to podfile: `pod 'ATAppUpdater', '~> 1.5'`
 - `#import "ATAppUpdater.h"` in the required class
 
 ## License
