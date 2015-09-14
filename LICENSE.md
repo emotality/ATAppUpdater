@@ -1,7 +1,4 @@
- Created by Jean-Pierre Fourie
- Copyright (c) 2015 Apptality <info@apptality.co.za>
- Website: http://www.apptality.co.za
- GitHub: https://github.com/apptality
+ Copyright (c) 2015 Apptality <<info@apptality.co.za>>
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
