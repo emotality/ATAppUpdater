@@ -1,5 +1,6 @@
 # ATAppUpdater 1.5
 Checks if there is a newer version of your app in the AppStore and alerts the user to update.
+[[Demo](http://demo.apptality.co.za/ATAppUpdater/)]
 
 ## Features
 
@@ -47,4 +48,4 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
 
 ## License
 
-ATAppUpdater is released under the MIT license. See LICENSE for details.
+ATAppUpdater is released under the MIT license. See [LICENSE](LICENSE.md) for details.
