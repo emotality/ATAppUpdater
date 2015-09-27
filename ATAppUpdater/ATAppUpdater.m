@@ -28,6 +28,9 @@
 @implementation ATAppUpdater
 
 
+#pragma mark - Init
+
+
 + (id)sharedUpdater
 {
     static ATAppUpdater *sharedUpdater;
@@ -38,6 +41,61 @@
     return sharedUpdater;
 }
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.alertTitle = @"New Version";
+        self.alertMessage = @"Version %@ is available on the AppStore.";
+        self.alertUpdateButtonTitle = @"Update";
+        self.alertCancelButtonTitle = @"Not Now";
+    }
+    return self;
+}
+
+
+#pragma mark - Instance Methods
+
+
+- (void)showUpdateWithForce
+{
+    BOOL hasConnection = [self hasConnection];
+    if (!hasConnection) return;
+    
+    [self checkNewAppVersionWithBlock:^(BOOL newVersion, NSString *version) {
+        if (newVersion) {
+            [[self alertUpdateForVersion:version withForce:YES] show];
+        }
+    }];
+}
+
+- (void)showUpdateWithConfirmation
+{
+    BOOL hasConnection = [self hasConnection];
+    if (!hasConnection) return;
+    
+    [self checkNewAppVersionWithBlock:^(BOOL newVersion, NSString *version) {
+        if (newVersion) {
+            [[self alertUpdateForVersion:version withForce:NO] show];
+        }
+    }];
+}
+
+- (void)forceOpenNewAppVersion:(BOOL)force
+{
+    BOOL hasConnection = [self hasConnection];
+    if (!hasConnection) return;
+    
+    [self checkNewAppVersionWithBlock:^(BOOL newVersion, NSString *version) {
+        if (newVersion) {
+            [[self alertUpdateForVersion:version withForce:force] show];
+        }
+    }];
+}
+
+
+#pragma mark - Private Methods
+
 
 - (BOOL)hasConnection
 {
@@ -45,7 +103,7 @@
     BOOL reachable;
     BOOL success;
     
-    // Needs SystemConfiguration.framework! <SystemConfiguration/SystemConfiguration.h>
+    // Link SystemConfiguration.framework! <SystemConfiguration/SystemConfiguration.h>
     SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, host);
     SCNetworkReachabilityFlags flags;
     success = SCNetworkReachabilityGetFlags(reachability, &flags);
@@ -54,19 +112,9 @@
     return reachable;
 }
 
-- (void)forceOpenNewAppVersion:(BOOL)force
-{
-    BOOL hasConnection = [self hasConnection];
-    if (!hasConnection) return;
-    
-    [self checkNewAppVersionWithBlock:^(BOOL newVersion, NSString *appUrl, NSString *version) {
-        if (newVersion) {
-            [[ATUpdateAlert alertUpdateForVersion:version withURL:appUrl withForce:force] show];
-        }
-    }];
-}
+NSString *appStoreURL = nil;
 
-- (void)checkNewAppVersionWithBlock:(void(^)(BOOL newVersion, NSString *appUrl, NSString *version))block
+- (void)checkNewAppVersionWithBlock:(void(^)(BOOL newVersion, NSString *version))block
 {
     NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
     NSString *bundleIdentifier = [bundleInfo valueForKey:@"CFBundleIdentifier"];
@@ -75,7 +123,7 @@
     
     NSData *lookupResults = [NSData dataWithContentsOfURL:lookupURL];
     if (!lookupResults) {
-        block(NO, nil, currentVersion);
+        block(NO, nil);
         return;
     }
     
@@ -87,36 +135,34 @@
         NSString *appItunesUrl = [[appDetails objectForKey:@"trackViewUrl"] stringByReplacingOccurrencesOfString:@"&uo=4" withString:@""];
         NSString *latestVersion = [appDetails objectForKey:@"version"];
         if ([latestVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending) {
-            block(YES, appItunesUrl, latestVersion);
+            appStoreURL = appItunesUrl;
+            block(YES, latestVersion);
         } else {
-            block(NO, nil, currentVersion);
+            block(NO, nil);
         }
     } else {
-        block(NO, nil, currentVersion);
+        block(NO, nil);
     }
 }
 
-@end
-
-
-@implementation ATUpdateAlert
-
-NSString *appStoreURL = nil;
-
-+ (UIAlertView *)alertUpdateForVersion:(NSString *)version withURL:(NSString *)appUrl withForce:(BOOL)force
+- (UIAlertView *)alertUpdateForVersion:(NSString *)version withForce:(BOOL)force
 {
-    appStoreURL = appUrl;
-    UIAlertView *alert = nil;
-    NSString *msg = [NSString stringWithFormat:@"Version %@ is available on the AppStore.", version];
-    
-    if (force) alert = [[UIAlertView alloc] initWithTitle:@"New Version" message:msg delegate:self cancelButtonTitle:nil otherButtonTitles:@"Update Now", nil];
-    else alert = [[UIAlertView alloc] initWithTitle:@"New Version" message:msg delegate:self cancelButtonTitle:@"Update" otherButtonTitles:@"Not Now", nil];
+    NSString *msg = [NSString stringWithFormat:self.alertMessage, version];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:self.alertTitle message:msg delegate:self cancelButtonTitle:force ? nil:self.alertUpdateButtonTitle otherButtonTitles:force ? self.alertUpdateButtonTitle:self.alertCancelButtonTitle, nil];
     return alert;
 }
 
-+ (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appStoreURL]];
+    if (buttonIndex == 0) {
+        NSURL *appUrl = [NSURL URLWithString:appStoreURL];
+        if ([[UIApplication sharedApplication] canOpenURL:appUrl]) {
+            [[UIApplication sharedApplication] openURL:appUrl];
+        } else {
+            UIAlertView *cantOpenUrlAlert = [[UIAlertView alloc] initWithTitle:@"Not Available" message:@"Could not open the AppStore, please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [cantOpenUrlAlert show];
+        }
+    }
 }
 
 @end

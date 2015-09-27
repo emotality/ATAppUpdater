@@ -26,16 +26,31 @@
 #import <UIKit/UIKit.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
-@interface ATAppUpdater : NSObject
+@interface ATAppUpdater : NSObject <UIAlertViewDelegate>
 
+/** Shared instance. [ATAppUpdater sharedUpdater] */
 + (id)sharedUpdater;
-- (void)forceOpenNewAppVersion:(BOOL)force;
 
-@end
+/** Checks for newer version and show alert without a cancel button. */
+- (void)showUpdateWithForce;
 
+/** Checks for newer version and show alert with a cancel button. */
+- (void)showUpdateWithConfirmation;
 
-@interface ATUpdateAlert : UIAlertView <UIAlertViewDelegate>
+/** Checks for newer version and show alert with or without a cancel button. */
+- (void)forceOpenNewAppVersion:(BOOL)force
+__attribute((deprecated("Use 'showUpdateWithForce' or 'showUpdateWithConfirmation' instead.")));
 
-+ (UIAlertView *)alertUpdateForVersion:(NSString *)version withURL:(NSString *)appUrl withForce:(BOOL)force;
+/** Set the UIAlertView title. NSLocalizedString() supported. */
+@property (nonatomic, weak) NSString *alertTitle;
+
+/** Set the UIAlertView alert message. NSLocalizedString() supported. */
+@property (nonatomic, weak) NSString *alertMessage;
+
+/** Set the UIAlertView update button's title. NSLocalizedString() supported. */
+@property (nonatomic, weak) NSString *alertUpdateButtonTitle;
+
+/** Set the UIAlertView cancel button's title. NSLocalizedString() supported. */
+@property (nonatomic, weak) NSString *alertCancelButtonTitle;
 
 @end
