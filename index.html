@@ -3,36 +3,33 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>ATAppUpdater by emotality</title>
+
+    <title>ATAppUpdater by apptality</title>
   </head>
 
   <body>
-    <div id="container">
+    <header>
       <div class="inner">
+        <h1>ATAppUpdater</h1>
+        <h2>Checks if there is a newer version of your app in the AppStore and alerts the user to update.</h2>
+        <a href="https://github.com/apptality/ATAppUpdater" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
 
-        <header>
-          <h1>ATAppUpdater</h1>
-          <h2>Checks if there is a newer version of your app in the AppStore and alerts the user to update the app.</h2>
-        </header>
-
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/emotality/ATAppUpdater/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/emotality/ATAppUpdater/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/emotality/ATAppUpdater" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
           <h1>
-<a id="atappupdater" class="anchor" href="#atappupdater" aria-hidden="true"><span class="octicon octicon-link"></span></a>ATAppUpdater</h1>
+<a id="atappupdater-16" class="anchor" href="#atappupdater-16" aria-hidden="true"><span class="octicon octicon-link"></span></a>ATAppUpdater 1.6</h1>
 
 <p>Checks if there is a newer version of your app in the AppStore and alerts the user to update.</p>
 
@@ -42,80 +39,96 @@
 <ul>
 <li>One line of code</li>
 <li>Milliseconds response</li>
+<li>Thread-safe</li>
 <li>Shows version number in alert</li>
 <li>Opens app in AppStore from alert</li>
 <li>Choose not to update now or force user to update</li>
-<li>Thread-safe</li>
+<li>Localization supported</li>
 </ul>
 
 <h2>
 <a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
 
-<div class="highlight highlight-objc"><pre>- (<span class="pl-k">BOOL</span>)application:(UIApplication *)application didFinishLaunchingWithOptions:(<span class="pl-c1">NSDictionary</span> *)launchOptions
+<p><strong>One line:</strong></p>
+
+<div class="highlight highlight-source-objc"><pre>- (<span class="pl-k">BOOL</span>)application:(UIApplication *)application didFinishLaunchingWithOptions:(<span class="pl-c1">NSDictionary</span> *)launchOptions
 {
-   [[ATAppUpdater <span class="pl-c1">sharedUpdater</span>] <span class="pl-c1">forceOpenNewAppVersion:</span><span class="pl-c1">NO</span>];
+   [[ATAppUpdater <span class="pl-c1">sharedUpdater</span>] <span class="pl-c1">showUpdateWithForce</span>];
    <span class="pl-k">return</span> <span class="pl-c1">YES</span>;
 }</pre></div>
 
-<p><img src="http://www.apptality.co.za/images/github/ATAppUpdater1.png" alt="alt tag"></p>
+<p><img src="http://s11.postimg.org/5c2gbr3mr/ATApp_Updater1.png" alt="ATAppUpdater1"></p>
 
-<h2></h2>
-
-<div class="highlight highlight-objc"><pre>- (<span class="pl-k">BOOL</span>)application:(UIApplication *)application didFinishLaunchingWithOptions:(<span class="pl-c1">NSDictionary</span> *)launchOptions
+<div class="highlight highlight-source-objc"><pre>- (<span class="pl-k">BOOL</span>)application:(UIApplication *)application didFinishLaunchingWithOptions:(<span class="pl-c1">NSDictionary</span> *)launchOptions
 {
-   [[ATAppUpdater <span class="pl-c1">sharedUpdater</span>] <span class="pl-c1">forceOpenNewAppVersion:</span><span class="pl-c1">YES</span>];
+   [[ATAppUpdater <span class="pl-c1">sharedUpdater</span>] <span class="pl-c1">showUpdateWithConfirmation</span>];
    <span class="pl-k">return</span> <span class="pl-c1">YES</span>;
 }</pre></div>
 
-<p><img src="http://www.apptality.co.za/images/github/ATAppUpdater2.png" alt="alt tag"></p>
+<p><img src="http://s11.postimg.org/osikkj9cz/ATApp_Updater2.png" alt="ATAppUpdater2"></p>
+
+<hr>
+
+<p><strong>Custom titles + localization:</strong></p>
+
+<div class="highlight highlight-source-objc"><pre>- (<span class="pl-k">BOOL</span>)application:(UIApplication *)application didFinishLaunchingWithOptions:(<span class="pl-c1">NSDictionary</span> *)launchOptions
+{
+   ATAppUpdater *updater = [ATAppUpdater <span class="pl-c1">sharedUpdater</span>];
+   [updater <span class="pl-c1">setAlertTitle:</span>NSLocalizedString(<span class="pl-s"><span class="pl-pds">@"</span>Nuwe Weergawe<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">@"</span>Alert Title<span class="pl-pds">"</span></span>)];
+   [updater <span class="pl-c1">setAlertMessage:</span>NSLocalizedString(<span class="pl-s"><span class="pl-pds">@"</span>Weergawe <span class="pl-c1">%@</span> is beskikbaar op die AppStore.<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">@"</span>Alert Message<span class="pl-pds">"</span></span>)];
+   [updater <span class="pl-c1">setAlertUpdateButtonTitle:</span><span class="pl-s"><span class="pl-pds">@"</span>Opgradeer<span class="pl-pds">"</span></span>];
+   [updater <span class="pl-c1">setAlertCancelButtonTitle:</span><span class="pl-s"><span class="pl-pds">@"</span>Nie nou nie<span class="pl-pds">"</span></span>];
+   [updater <span class="pl-c1">showUpdateWithConfirmation</span>];
+   <span class="pl-k">return</span> <span class="pl-c1">YES</span>;
+}</pre></div>
+
+<p><img src="http://s11.postimg.org/iu9co1fs3/ATApp_Updater3.png" alt="ATAppUpdater3"></p>
 
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
 
-<h3>
-<a id="manual" class="anchor" href="#manual" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Manual</em>
-</h3>
+<p><strong>Manual:</strong></p>
 
 <ul>
-<li>Copy <code>ATAppUpdater</code> folder in your project</li>
+<li>Copy <code>ATAppUpdater</code> folder into your project</li>
 <li>Link <code>SystemConfiguration.framework</code>
 </li>
 <li>
 <code>#import "ATAppUpdater.h"</code> in the required class</li>
 </ul>
 
-<h3>
-<a id="cocoapods" class="anchor" href="#cocoapods" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>CocoaPods</em>
-</h3>
+<p><strong>CocoaPods:</strong></p>
 
 <ul>
-<li>Add to podfile: <code>pod 'ATAppUpdater', '~&gt; 1.2'</code>
+<li>Add to podfile: <code>pod 'ATAppUpdater'</code>
 </li>
 <li>
 <code>#import "ATAppUpdater.h"</code> in the required class</li>
 </ul>
 
 <h2>
-<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h2>
-
-<ul>
-<li>Reachability: <a href="https://github.com/tonymillion/Reachability">https://github.com/tonymillion/Reachability</a>
-</li>
-</ul>
-
-<h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
-<p>ATAppUpdater is released under the MIT license. See LICENSE for details.</p>
+<p>ATAppUpdater is released under the MIT license. See <a href="https://github.com/apptality/ATAppUpdater/blob/master/LICENSE.md">LICENSE</a> for details.</p>
         </section>
 
-        <footer>
-          ATAppUpdater is maintained by <a href="https://github.com/emotality">emotality</a><br>
-          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+        <aside id="sidebar">
+          <a href="https://github.com/apptality/ATAppUpdater/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/apptality/ATAppUpdater/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
 
-        
+          <p class="repo-owner"><a href="https://github.com/apptality/ATAppUpdater"></a> is maintained by <a href="https://github.com/apptality">apptality</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
       </div>
     </div>
+
+  
   </body>
 </html>
