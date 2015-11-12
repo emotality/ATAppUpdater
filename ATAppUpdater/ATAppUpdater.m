@@ -62,7 +62,7 @@
     BOOL hasConnection = [self hasConnection];
     if (!hasConnection) return;
     
-    [self checkNewAppVersionWithBlock:^(BOOL newVersion, NSString *version) {
+    [self checkNewAppVersion:^(BOOL newVersion, NSString *version) {
         if (newVersion) {
             [[self alertUpdateForVersion:version withForce:YES] show];
         }
@@ -74,7 +74,7 @@
     BOOL hasConnection = [self hasConnection];
     if (!hasConnection) return;
     
-    [self checkNewAppVersionWithBlock:^(BOOL newVersion, NSString *version) {
+    [self checkNewAppVersion:^(BOOL newVersion, NSString *version) {
         if (newVersion) {
             [[self alertUpdateForVersion:version withForce:NO] show];
         }
@@ -86,7 +86,7 @@
     BOOL hasConnection = [self hasConnection];
     if (!hasConnection) return;
     
-    [self checkNewAppVersionWithBlock:^(BOOL newVersion, NSString *version) {
+    [self checkNewAppVersion:^(BOOL newVersion, NSString *version) {
         if (newVersion) {
             [[self alertUpdateForVersion:version withForce:force] show];
         }
@@ -114,35 +114,40 @@
 
 NSString *appStoreURL = nil;
 
-- (void)checkNewAppVersionWithBlock:(void(^)(BOOL newVersion, NSString *version))block
+- (void)checkNewAppVersion:(void(^)(BOOL newVersion, NSString *version))completion
 {
     NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
-    NSString *bundleIdentifier = [bundleInfo valueForKey:@"CFBundleIdentifier"];
-    NSString *currentVersion = [bundleInfo objectForKey:@"CFBundleShortVersionString"];
+    NSString *bundleIdentifier = bundleInfo[@"CFBundleIdentifier"];
+    NSString *currentVersion = bundleInfo[@"CFBundleShortVersionString"];
     NSURL *lookupURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", bundleIdentifier]];
     
-    NSData *lookupResults = [NSData dataWithContentsOfURL:lookupURL];
-    if (!lookupResults) {
-        block(NO, nil);
-        return;
-    }
-    
-    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:lookupResults options:0 error:nil];
-    
-    NSUInteger resultCount = [[jsonResults objectForKey:@"resultCount"] integerValue];
-    if (resultCount){
-        NSDictionary *appDetails = [[jsonResults objectForKey:@"results"] firstObject];
-        NSString *appItunesUrl = [[appDetails objectForKey:@"trackViewUrl"] stringByReplacingOccurrencesOfString:@"&uo=4" withString:@""];
-        NSString *latestVersion = [appDetails objectForKey:@"version"];
-        if ([latestVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending) {
-            appStoreURL = appItunesUrl;
-            block(YES, latestVersion);
-        } else {
-            block(NO, nil);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
+        
+        NSData *lookupResults = [NSData dataWithContentsOfURL:lookupURL];
+        if (!lookupResults) {
+            completion(NO, nil);
+            return;
         }
-    } else {
-        block(NO, nil);
-    }
+        
+        NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:lookupResults options:0 error:nil];
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            NSUInteger resultCount = [jsonResults[@"resultCount"] integerValue];
+            if (resultCount){
+                NSDictionary *appDetails = [jsonResults[@"results"] firstObject];
+                NSString *appItunesUrl = [appDetails[@"trackViewUrl"] stringByReplacingOccurrencesOfString:@"&uo=4" withString:@""];
+                NSString *latestVersion = appDetails[@"version"];
+                if ([latestVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending) {
+                    appStoreURL = appItunesUrl;
+                    completion(YES, latestVersion);
+                } else {
+                    completion(NO, nil);
+                }
+            } else {
+                completion(NO, nil);
+            }
+        });
+    });
 }
 
 - (UIAlertView *)alertUpdateForVersion:(NSString *)version withForce:(BOOL)force

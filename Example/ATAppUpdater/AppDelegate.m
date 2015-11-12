@@ -16,12 +16,14 @@
 @implementation AppDelegate
 
 
-/// Change to your bundle identifier and increase the bundle version number to test.
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    BOOL showCutomTitles = false;
+    // Change to your bundle identifier and increase the bundle version number to test.
     
-    if (showCutomTitles) {
+    BOOL showCutomAlert = false;
+    
+    if (showCutomAlert) {
+        // Custom alert
         ATAppUpdater *updater = [ATAppUpdater sharedUpdater];
         [updater setAlertTitle:NSLocalizedString(@"Nuwe Weergawe", @"Alert Title")];
         [updater setAlertMessage:NSLocalizedString(@"Weergawe %@ is beskikbaar op die AppStore.", @"Alert Message")];
@@ -29,8 +31,8 @@
         [updater setAlertCancelButtonTitle:@"Nie nou nie"];
         [updater showUpdateWithConfirmation];
     } else {
-        //[[ATAppUpdater sharedUpdater] showUpdateWithForce];
-        [[ATAppUpdater sharedUpdater] showUpdateWithConfirmation];
+        // One line of code
+        [[ATAppUpdater sharedUpdater] showUpdateWithConfirmation]; // OR [[ATAppUpdater sharedUpdater] showUpdateWithForce];
     }
  
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];

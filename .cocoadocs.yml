@@ -3,9 +3,9 @@ body: '"Helvetica Neue", "Arial", san-serif'
 code: '"Monaco", "Menlo", "Consolas", "Courier New", monospace'
 
 highlight-color: "#00B79B"
-highlight-dark-color: "#006E5D"
+highlight-dark-color: "#27a28f"
 darker-color: "#00B79B"
-darker-dark-color: "#00B79B"
-background-color: "#84E0D2"
+darker-dark-color: "#27a28f"
+background-color: "#61dcca"
 alt-link-color: "#00B79B"
 warning-color: "#00B79B"

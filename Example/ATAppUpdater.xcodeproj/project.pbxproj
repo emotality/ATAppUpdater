@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A05C87A81BB728D100876211 /* ATAppUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = A05C87A71BB728D100876211 /* ATAppUpdater.m */; settings = {ASSET_TAGS = (); }; };
-		A05C87AA1BB728FD00876211 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A05C87A91BB728FD00876211 /* bg@2x.png */; settings = {ASSET_TAGS = (); }; };
+		A05C87A81BB728D100876211 /* ATAppUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = A05C87A71BB728D100876211 /* ATAppUpdater.m */; };
+		A05C87AA1BB728FD00876211 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A05C87A91BB728FD00876211 /* bg@2x.png */; };
 		A0E877C41BB727FE00B56720 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E877C31BB727FE00B56720 /* main.m */; };
 		A0E877C71BB727FE00B56720 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E877C61BB727FE00B56720 /* AppDelegate.m */; };
 		A0E877CA1BB727FE00B56720 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E877C91BB727FE00B56720 /* ViewController.m */; };
@@ -284,10 +284,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ATAppUpdater/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.apptality.ATAppUpdater;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apptality.wordnik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -296,10 +297,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ATAppUpdater/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.apptality.ATAppUpdater;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apptality.wordnik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
