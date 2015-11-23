@@ -1,3 +1,19 @@
+# MGAppUpdater 
+This is a fork of ATAppUpdater, which I have rewritten in Swift 2.0 and added another function.
+
+The function allows you to pass a minimum force version String, which will also be checked against the User's currently installed App version and will force the user to update if his Version is lower than the passed minimum version String.
+
+## Example Usage by passing the minimum version String fetched from Parse.com
+
+````objc
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+   PFConfig.getConfigInBackgroundWithBlock { (config : PFConfig?, error:NSError?) -> Void in
+      MGAppUpdater.sharedUpdater().showUpdateWithForce(config.objectForKey("MinimumForceVersion") as? String)
+   }
+}
+````
+
+
 # ATAppUpdater 1.7
 Checks if there is a newer version of your app in the AppStore and alerts the user to update.
 
