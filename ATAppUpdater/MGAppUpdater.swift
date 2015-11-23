@@ -23,19 +23,6 @@ class MGAppUpdater : NSObject, UIAlertViewDelegate {
         return Static.instance
     }
 
-    
-//    class func sharedUpdater() -> AnyObject {
-//        var sharedUpdater: MGAppUpdater
-//        var onceToken: dispatch_once_t
-//        dispatch_once(&onceToken, {
-//            sharedUpdater = MGAppUpdater()
-//        })
-//        
-//        
-//        
-//        return sharedUpdater
-//    }
-    
     required override init() {
         self.alertTitle = "New Version"
         self.alertMessage = "Version %@ is available on the AppStore."
@@ -43,20 +30,10 @@ class MGAppUpdater : NSObject, UIAlertViewDelegate {
         self.alertCancelButtonTitle = "Not Now"
         
         super.init()
-
-
     }
     
-//    convenience override init() {
-//        self.init()
-//        self.alertTitle = "New Version"
-//        self.alertMessage = "Version %@ is available on the AppStore."
-//        self.alertUpdateButtonTitle = "Update"
-//        self.alertCancelButtonTitle = "Not Now"
-//    }
-    
     func showUpdateWithForce() {
-        var hasConnection: Bool = self.hasConnection()
+        let hasConnection: Bool = self.hasConnection()
         if !hasConnection {
             return
         }
@@ -68,17 +45,35 @@ class MGAppUpdater : NSObject, UIAlertViewDelegate {
         })
     }
     
-    func showUpdateWithConfirmation() {
-        var hasConnection: Bool = self.hasConnection()
+    func showUpdateWithForce(minimumForceVersion : String?) {
+        let hasConnection: Bool = self.hasConnection()
         if !hasConnection {
             return
         }
-        
+        checkNewAppVersion({(newVersion, version) in
+            if newVersion {
+                if(minimumForceVersion != nil){
+                    let bundleInfo = NSBundle.mainBundle().infoDictionary
+                    let currentVersion : String = bundleInfo!["CFBundleShortVersionString"] as! String
+                    if minimumForceVersion!.compare(currentVersion, options: .NumericSearch) == .OrderedDescending {
+                        self.alertUpdateForVersion(version!, withForce: true).show()
+                        return
+                    }
+                }
+                self.alertUpdateForVersion(version!, withForce: false).show()
+            }
+        })
+    }
+    
+    func showUpdateWithConfirmation() {
+        let hasConnection: Bool = self.hasConnection()
+        if !hasConnection {
+            return
+        }
         checkNewAppVersion({(newVersion, version) in
             if newVersion {
                 self.alertUpdateForVersion(version!, withForce: false).show()
             }
-            
         })
     }
     
@@ -97,9 +92,8 @@ class MGAppUpdater : NSObject, UIAlertViewDelegate {
     
     func hasConnection() -> Bool {
         let host = "itunes.apple.com"
-        var reachable: Bool
         var success: Bool
-        var reachability: SCNetworkReachabilityRef = SCNetworkReachabilityCreateWithName(nil, host)!
+        let reachability: SCNetworkReachabilityRef = SCNetworkReachabilityCreateWithName(nil, host)!
         var flags : SCNetworkReachabilityFlags = []
         success = SCNetworkReachabilityGetFlags(reachability, &flags)
         
@@ -116,20 +110,21 @@ class MGAppUpdater : NSObject, UIAlertViewDelegate {
     func checkNewAppVersion(completion: (newVersion : Bool, version : String?) -> Void ) {
         if let bundleInfo = NSBundle.mainBundle().infoDictionary {
             
-            var bundleIdentifier = bundleInfo["CFBundleIdentifier"] as! String
-            var currentVersion : String = bundleInfo["CFBundleShortVersionString"] as! String
-            var lookupURL: NSURL = NSURL(string: "http://itunes.apple.com/lookup?bundleId=\(bundleIdentifier)")!
+            let bundleIdentifier = bundleInfo["CFBundleIdentifier"] as! String
+            let currentVersion : String = bundleInfo["CFBundleShortVersionString"] as! String
+            let lookupURL: NSURL = NSURL(string: "http://itunes.apple.com/lookup?bundleId=\(bundleIdentifier)")!
+            
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {() in
                 if let lookupResults: NSData = NSData(contentsOfURL: lookupURL) {
                     
                     do {
                         var jsonResults: [NSObject : AnyObject] = try NSJSONSerialization.JSONObjectWithData(lookupResults, options: NSJSONReadingOptions.MutableContainers) as! [NSObject : AnyObject]
                         dispatch_async(dispatch_get_main_queue(), {() in
-                            var resultCount: Int = jsonResults["resultCount"] as! Int
+                            let resultCount: Int = jsonResults["resultCount"] as! Int
                             if resultCount > 0 {
                                 var appDetails: [NSObject : AnyObject] = jsonResults["results"]!.firstObject as! [NSObject : AnyObject]
-                                var appItunesUrl: String = appDetails["trackViewUrl"]!.stringByReplacingOccurrencesOfString("&uo=4", withString: "")
-                                var latestVersion: String = appDetails["version"] as! String
+                                let appItunesUrl: String = appDetails["trackViewUrl"]!.stringByReplacingOccurrencesOfString("&uo=4", withString: "")
+                                let latestVersion: String = appDetails["version"] as! String
                                 
                                 if latestVersion.compare(currentVersion, options: .NumericSearch) == .OrderedDescending {
                                     self.appStoreURL = appItunesUrl
@@ -163,12 +158,12 @@ class MGAppUpdater : NSObject, UIAlertViewDelegate {
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 0 {
-            var appUrl: NSURL = NSURL(string: appStoreURL!)!
+            let appUrl: NSURL = NSURL(string: appStoreURL!)!
             if UIApplication.sharedApplication().canOpenURL(appUrl) {
                 UIApplication.sharedApplication().openURL(appUrl)
             }
             else {
-                var cantOpenUrlAlert: UIAlertView = UIAlertView(title: "Not Available", message: "Could not open the AppStore, please try again later.", delegate: nil, cancelButtonTitle: "OK")
+                let cantOpenUrlAlert: UIAlertView = UIAlertView(title: "Not Available", message: "Could not open the AppStore, please try again later.", delegate: nil, cancelButtonTitle: "OK")
                 
                 cantOpenUrlAlert.show()
             }
