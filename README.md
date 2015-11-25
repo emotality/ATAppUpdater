@@ -1,4 +1,3 @@
-# MGAppUpdater 
 This is a fork of ATAppUpdater, which I have rewritten in Swift 2.0 and added another function.
 
 The function allows you to pass a minimum force version String, which will also be checked against the User's currently installed App version and will force the user to update if his Version is lower than the passed minimum version String.
