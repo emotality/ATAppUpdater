@@ -1,5 +1,5 @@
 //
-//  MGAppUpdater.swift
+//  ATAppUpdater.swift
 //  R8Me
 //
 //  Created by Michael Gasparik on 22/11/15.
@@ -9,16 +9,16 @@
 import UIKit
 import SystemConfiguration
 
-class MGAppUpdater : NSObject, UIAlertViewDelegate {
+class ATAppUpdater : NSObject, UIAlertViewDelegate {
     
     var alertTitle : String
     var alertMessage : String
     var alertUpdateButtonTitle : String
     var alertCancelButtonTitle : String
     
-    class func sharedUpdater() -> MGAppUpdater {
+    class func sharedUpdater() -> ATAppUpdater {
         struct Static {
-            static let instance: MGAppUpdater = MGAppUpdater()
+            static let instance: ATAppUpdater = ATAppUpdater()
         }
         return Static.instance
     }
