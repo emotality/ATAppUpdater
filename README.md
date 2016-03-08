@@ -24,7 +24,7 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
    return YES;
 }
 ````
-![ATAppUpdater1](http://demo.apptality.co.za/ATAppUpdater/images/1.6/ATAppUpdater1.png)
+![ATAppUpdater1](http://apptality.ae/assets/ATAppUpdater/ATAppUpdater1.png)
 ````objc
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -32,7 +32,7 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
    return YES;
 }
 ````
-![ATAppUpdater2](http://demo.apptality.co.za/ATAppUpdater/images/1.6/ATAppUpdater2.png)
+![ATAppUpdater2](http://apptality.ae/assets/ATAppUpdater/ATAppUpdater2.png)
 
 ---
 **Custom titles + localization:**
@@ -48,7 +48,7 @@ Checks if there is a newer version of your app in the AppStore and alerts the us
    return YES;
 }
 ````
-![ATAppUpdater3](http://demo.apptality.co.za/ATAppUpdater/images/1.6/ATAppUpdater3.png)
+![ATAppUpdater3](http://apptality.ae/assets/ATAppUpdater/ATAppUpdater3.png)
 
 ## Installation
 
