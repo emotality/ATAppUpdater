@@ -3,38 +3,43 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
     <title>ATAppUpdater by apptality</title>
   </head>
 
   <body>
-    <header>
+    <div id="container">
       <div class="inner">
-        <h1>ATAppUpdater</h1>
-        <h2>Checks if there is a newer version of your app in the AppStore and alerts the user to update.</h2>
-        <a href="https://github.com/apptality/ATAppUpdater" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
+        <header>
+          <h1>ATAppUpdater</h1>
+          <h2>Checks if there is a newer version of your app in the AppStore and alerts the user to update.</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/apptality/ATAppUpdater/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/apptality/ATAppUpdater/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/apptality/ATAppUpdater" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
           <h1>
-<a id="atappupdater-16" class="anchor" href="#atappupdater-16" aria-hidden="true"><span class="octicon octicon-link"></span></a>ATAppUpdater 1.6</h1>
+<a id="atappupdater-17" class="anchor" href="#atappupdater-17" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ATAppUpdater 1.7</h1>
 
 <p>Checks if there is a newer version of your app in the AppStore and alerts the user to update.</p>
 
+<p><a href="https://travis-ci.org/apptality/ATAppUpdater"><img src="https://travis-ci.org/apptality/ATAppUpdater.svg?branch=master" alt="Build Status"></a> </p>
+
 <h2>
-<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h2>
 
 <ul>
 <li>One line of code</li>
@@ -47,7 +52,7 @@
 </ul>
 
 <h2>
-<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h2>
 
 <p><strong>One line:</strong></p>
 
@@ -57,7 +62,7 @@
    <span class="pl-k">return</span> <span class="pl-c1">YES</span>;
 }</pre></div>
 
-<p><img src="http://s11.postimg.org/5c2gbr3mr/ATApp_Updater1.png" alt="ATAppUpdater1"></p>
+<p><img src="http://apptality.ae/assets/ATAppUpdater/ATAppUpdater1.png" alt="ATAppUpdater1"></p>
 
 <div class="highlight highlight-source-objc"><pre>- (<span class="pl-k">BOOL</span>)application:(UIApplication *)application didFinishLaunchingWithOptions:(<span class="pl-c1">NSDictionary</span> *)launchOptions
 {
@@ -65,7 +70,7 @@
    <span class="pl-k">return</span> <span class="pl-c1">YES</span>;
 }</pre></div>
 
-<p><img src="http://s11.postimg.org/osikkj9cz/ATApp_Updater2.png" alt="ATAppUpdater2"></p>
+<p><img src="http://apptality.ae/assets/ATAppUpdater/ATAppUpdater2.png" alt="ATAppUpdater2"></p>
 
 <hr>
 
@@ -82,10 +87,10 @@
    <span class="pl-k">return</span> <span class="pl-c1">YES</span>;
 }</pre></div>
 
-<p><img src="http://s11.postimg.org/iu9co1fs3/ATApp_Updater3.png" alt="ATAppUpdater3"></p>
+<p><img src="http://apptality.ae/assets/ATAppUpdater/ATAppUpdater3.png" alt="ATAppUpdater3"></p>
 
 <h2>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
 
 <p><strong>Manual:</strong></p>
 
@@ -107,28 +112,18 @@
 </ul>
 
 <h2>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
 <p>ATAppUpdater is released under the MIT license. See <a href="https://github.com/apptality/ATAppUpdater/blob/master/LICENSE.md">LICENSE</a> for details.</p>
         </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/apptality/ATAppUpdater/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/apptality/ATAppUpdater/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+        <footer>
+          ATAppUpdater is maintained by <a href="https://github.com/apptality">apptality</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
 
-          <p class="repo-owner"><a href="https://github.com/apptality/ATAppUpdater"></a> is maintained by <a href="https://github.com/apptality">apptality</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
+        
       </div>
     </div>
-
-  
   </body>
 </html>
