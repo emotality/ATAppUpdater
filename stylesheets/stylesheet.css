@@ -10,7 +10,7 @@ body {
   color: #606c71; }
 
 a {
-  color: #1e6bb8;
+  color: #5a4d8c;
   text-decoration: none; }
   a:hover {
     text-decoration: underline; }
@@ -56,8 +56,8 @@ a {
 .page-header {
   color: #fff;
   text-align: center;
-  background-color: #159957;
-  background-image: linear-gradient(120deg, #155799, #159957); }
+  background-color: #333158;
+  background-image: linear-gradient(90deg, #333158, #5a4d8c, #333158); }
 
 @media screen and (min-width: 64em) {
   .page-header {
@@ -111,8 +111,8 @@ a {
 .main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
   margin-top: 2rem;
   margin-bottom: 1rem;
-  font-weight: normal;
-  color: #159957; }
+  font-weight: 600;
+  color: #4c437a; }
 .main-content p {
   margin-bottom: 1em; }
 .main-content code {
