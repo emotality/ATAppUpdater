@@ -1,7 +1,7 @@
 # ATAppUpdater 1.7
 Checks if there is a newer version of your app in the AppStore and alerts the user to update.
 
-[![Build Status](https://travis-ci.org/apptality/ATAppUpdater.svg?branch=master)](https://travis-ci.org/apptality/ATAppUpdater) 
+[![Build Status](https://travis-ci.org/emotality/ATAppUpdater.svg?branch=master)](https://travis-ci.org/emotality/ATAppUpdater) 
 
 ## Features
 
