@@ -2,8 +2,8 @@
 //  ViewController.m
 //  ATAppUpdater
 //
-//  Created by Jean-Pierre Fourie on 2015/09/14.
-//  Copyright © 2015 Apptality. All rights reserved.
+//  Created by Jean-Pierre Fourie on 2017/05/14.
+//  Copyright © 2017 emotality. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -14,38 +14,48 @@
 
 @implementation ViewController
 
-#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
-#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    UIImageView *bg = [[UIImageView alloc] initWithFrame:self.view.frame];
-    [bg setImage:[UIImage imageNamed:@"bg.png"]];
-    [self.view addSubview:bg];
     
-    UIButton *website = [[UIButton alloc] initWithFrame:CGRectMake(20, SCREEN_HEIGHT-55, SCREEN_WIDTH-40, 35)];
-    [website setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.1f]];
-    [website setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [website setTitle:@"github.com/apptality" forState:UIControlStateNormal];
-    [website setShowsTouchWhenHighlighted:YES];
-    [website.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:20]];
-    [website.layer setCornerRadius:5.5f];
-    [website.layer setBorderWidth:1.0f];
-    [website.layer setBorderColor:[UIColor whiteColor].CGColor];
-    [website addTarget:self action:@selector(openWebsite) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:website];
+    // Change to your bundle identifier and increase the bundle version number to test.
+    
+    BOOL showCutomAlert = false;
+    
+    if (showCutomAlert) {
+        // Custom
+        ATAppUpdater *updater = [ATAppUpdater sharedUpdater];
+        [updater setAlertTitle:NSLocalizedString(@"Nuwe Weergawe", @"Alert Title")];
+        [updater setAlertMessage:NSLocalizedString(@"Weergawe %@ is beskikbaar op die AppStore.", @"Alert Message")];
+        [updater setAlertUpdateButtonTitle:@"Opgradeer"];
+        [updater setAlertCancelButtonTitle:@"Nie nou nie"];
+        [updater setDelegate:self]; // Optional
+        [updater showUpdateWithConfirmation];
+        
+    } else {
+        // Simple
+        [[ATAppUpdater sharedUpdater] setDelegate:self]; // Optional
+        [[ATAppUpdater sharedUpdater] showUpdateWithConfirmation]; // OR [[ATAppUpdater sharedUpdater] showUpdateWithForce];
+    }
 }
 
-- (void)viewDidAppear:(BOOL)animated
+#pragma mark - ATAppUpdater Delegate
+
+#warning When using delegate, remember to add the ATAppUpdaterDelegate protocol: @interface ViewController : UIViewController <ATAppUpdaterDelegate>
+
+- (void)appUpdaterDidShowUpdateDialog
 {
-    [super viewDidAppear:animated];
+    NSLog(@"appUpdaterDidShowUpdateDialog");
 }
 
-- (void)openWebsite
+- (void)appUpdaterUserDidLaunchAppStore
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/apptality"]];
+    NSLog(@"appUpdaterUserDidLaunchAppStore");
+}
+
+- (void)appUpdaterUserDidCancel
+{
+    NSLog(@"appUpdaterUserDidCancel");
 }
 
 @end

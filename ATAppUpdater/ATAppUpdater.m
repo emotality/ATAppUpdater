@@ -1,7 +1,7 @@
 /*
  Created by Jean-Pierre Fourie
- Copyright (c) 2015 Apptality <info@apptality.co.za>
- Website: http://www.apptality.co.za
+ Copyright (c) 2015-2017 emotality <jp@emotality.com>
+ Website: https://www.emotality.com
  GitHub: https://github.com/apptality
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -63,9 +63,7 @@
     if (!hasConnection) return;
     
     [self checkNewAppVersion:^(BOOL newVersion, NSString *version) {
-        if (newVersion) {
-            [[self alertUpdateForVersion:version withForce:YES] show];
-        }
+        if (newVersion) [self alertUpdateForVersion:version withForce:YES];
     }];
 }
 
@@ -75,21 +73,7 @@
     if (!hasConnection) return;
     
     [self checkNewAppVersion:^(BOOL newVersion, NSString *version) {
-        if (newVersion) {
-            [[self alertUpdateForVersion:version withForce:NO] show];
-        }
-    }];
-}
-
-- (void)forceOpenNewAppVersion:(BOOL)force
-{
-    BOOL hasConnection = [self hasConnection];
-    if (!hasConnection) return;
-    
-    [self checkNewAppVersion:^(BOOL newVersion, NSString *version) {
-        if (newVersion) {
-            [[self alertUpdateForVersion:version withForce:force] show];
-        }
+        if (newVersion) [self alertUpdateForVersion:version withForce:NO];
     }];
 }
 
@@ -119,7 +103,7 @@ NSString *appStoreURL = nil;
     NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
     NSString *bundleIdentifier = bundleInfo[@"CFBundleIdentifier"];
     NSString *currentVersion = bundleInfo[@"CFBundleShortVersionString"];
-    NSURL *lookupURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", bundleIdentifier]];
+    NSURL *lookupURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/lookup?bundleId=%@", bundleIdentifier]];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
@@ -150,24 +134,33 @@ NSString *appStoreURL = nil;
     });
 }
 
-- (UIAlertView *)alertUpdateForVersion:(NSString *)version withForce:(BOOL)force
+- (void)alertUpdateForVersion:(NSString *)version withForce:(BOOL)force
 {
-    NSString *msg = [NSString stringWithFormat:self.alertMessage, version];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:self.alertTitle message:msg delegate:self cancelButtonTitle:force ? nil:self.alertUpdateButtonTitle otherButtonTitles:force ? self.alertUpdateButtonTitle:self.alertCancelButtonTitle, nil];
-    return alert;
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0) {
-        NSURL *appUrl = [NSURL URLWithString:appStoreURL];
-        if ([[UIApplication sharedApplication] canOpenURL:appUrl]) {
-            [[UIApplication sharedApplication] openURL:appUrl];
-        } else {
-            UIAlertView *cantOpenUrlAlert = [[UIAlertView alloc] initWithTitle:@"Not Available" message:@"Could not open the AppStore, please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [cantOpenUrlAlert show];
+    NSString *alertMessage = [NSString stringWithFormat:self.alertMessage, version];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:self.alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *updateAction = [UIAlertAction actionWithTitle:self.alertUpdateButtonTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appStoreURL]];
+        if ([self.delegate respondsToSelector:@selector(appUpdaterUserDidLaunchAppStore)]) {
+            [self.delegate appUpdaterUserDidLaunchAppStore];
         }
+    }];
+    [alert addAction:updateAction];
+    
+    if (!force) {
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:self.alertCancelButtonTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            if ([self.delegate respondsToSelector:@selector(appUpdaterUserDidCancel)]) {
+                [self.delegate appUpdaterUserDidCancel];
+            }
+        }];
+        [alert addAction:cancelAction];
     }
+    
+    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:alert animated:YES completion:^{
+        if ([self.delegate respondsToSelector:@selector(appUpdaterDidShowUpdateDialog)]) {
+            [self.delegate appUpdaterDidShowUpdateDialog];
+        }
+    }];
 }
 
 @end

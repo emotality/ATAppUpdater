@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A05C87A81BB728D100876211 /* ATAppUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = A05C87A71BB728D100876211 /* ATAppUpdater.m */; };
-		A05C87AA1BB728FD00876211 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A05C87A91BB728FD00876211 /* bg@2x.png */; };
 		A0E877C41BB727FE00B56720 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E877C31BB727FE00B56720 /* main.m */; };
 		A0E877C71BB727FE00B56720 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E877C61BB727FE00B56720 /* AppDelegate.m */; };
 		A0E877CA1BB727FE00B56720 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E877C91BB727FE00B56720 /* ViewController.m */; };
@@ -21,7 +20,6 @@
 /* Begin PBXFileReference section */
 		A05C87A61BB728D100876211 /* ATAppUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATAppUpdater.h; sourceTree = "<group>"; };
 		A05C87A71BB728D100876211 /* ATAppUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATAppUpdater.m; sourceTree = "<group>"; };
-		A05C87A91BB728FD00876211 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
 		A0E877BF1BB727FE00B56720 /* ATAppUpdater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATAppUpdater.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E877C31BB727FE00B56720 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A0E877C51BB727FE00B56720 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 				A0E877CB1BB727FE00B56720 /* Main.storyboard */,
 				A0E877D01BB727FE00B56720 /* LaunchScreen.storyboard */,
 				A0E877CE1BB727FE00B56720 /* Assets.xcassets */,
-				A05C87A91BB728FD00876211 /* bg@2x.png */,
 				A0E877D31BB727FE00B56720 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -126,7 +123,7 @@
 		A0E877B71BB727FE00B56720 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = Apptality;
 				TargetAttributes = {
 					A0E877BE1BB727FE00B56720 = {
@@ -160,7 +157,6 @@
 				A0E877D21BB727FE00B56720 /* LaunchScreen.storyboard in Resources */,
 				A0E877CF1BB727FE00B56720 /* Assets.xcassets in Resources */,
 				A0E877CD1BB727FE00B56720 /* Main.storyboard in Resources */,
-				A05C87AA1BB728FD00876211 /* bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,8 +209,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -256,8 +254,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -288,7 +288,7 @@
 				INFOPLIST_FILE = ATAppUpdater/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.apptality.wordnik;
+				PRODUCT_BUNDLE_IDENTIFIER = ph.telegra.Telegraph;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -301,7 +301,7 @@
 				INFOPLIST_FILE = ATAppUpdater/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.apptality.wordnik;
+				PRODUCT_BUNDLE_IDENTIFIER = ph.telegra.Telegraph;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

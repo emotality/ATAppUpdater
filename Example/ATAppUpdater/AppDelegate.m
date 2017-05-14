@@ -2,43 +2,18 @@
 //  AppDelegate.m
 //  ATAppUpdater
 //
-//  Created by Jean-Pierre Fourie on 2015/09/14.
-//  Copyright © 2015 Apptality. All rights reserved.
+//  Created by Jean-Pierre Fourie on 2017/05/14.
+//  Copyright © 2017 emotality. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import "ATAppUpdater.h"
-
-@interface AppDelegate ()
-
-@end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Change to your bundle identifier and increase the bundle version number to test.
-    
-    BOOL showCutomAlert = false;
-    
-    if (showCutomAlert) {
-        // Custom alert
-        ATAppUpdater *updater = [ATAppUpdater sharedUpdater];
-        [updater setAlertTitle:NSLocalizedString(@"Nuwe Weergawe", @"Alert Title")];
-        [updater setAlertMessage:NSLocalizedString(@"Weergawe %@ is beskikbaar op die AppStore.", @"Alert Message")];
-        [updater setAlertUpdateButtonTitle:@"Opgradeer"];
-        [updater setAlertCancelButtonTitle:@"Nie nou nie"];
-        [updater showUpdateWithConfirmation];
-    } else {
-        // One line of code
-        [[ATAppUpdater sharedUpdater] showUpdateWithConfirmation]; // OR [[ATAppUpdater sharedUpdater] showUpdateWithForce];
-    }
- 
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
-
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

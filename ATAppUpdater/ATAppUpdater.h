@@ -1,7 +1,7 @@
 /*
  Created by Jean-Pierre Fourie
- Copyright (c) 2015 Apptality <info@apptality.co.za>
- Website: http://www.apptality.co.za
+ Copyright (c) 2015-2017 emotality <jp@emotality.com>
+ Website: https://www.emotality.com
  GitHub: https://github.com/apptality
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,20 +26,25 @@
 #import <UIKit/UIKit.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
-@interface ATAppUpdater : NSObject <UIAlertViewDelegate>
+@protocol ATAppUpdaterDelegate <NSObject>
+@optional
 
-/** Shared instance. [ATAppUpdater sharedUpdater] */
-+ (id)sharedUpdater;
+/** Will be called when the update alert has shown. */
+- (void)appUpdaterDidShowUpdateDialog;
 
-/** Checks for newer version and show alert without a cancel button. */
-- (void)showUpdateWithForce;
+/** Will be called when the user selected to update now. */
+- (void)appUpdaterUserDidLaunchAppStore;
 
-/** Checks for newer version and show alert with a cancel button. */
-- (void)showUpdateWithConfirmation;
+/** Will be called when the user selected not to update now. */
+- (void)appUpdaterUserDidCancel;
 
-/** Checks for newer version and show alert with or without a cancel button. */
-- (void)forceOpenNewAppVersion:(BOOL)force
-__attribute((deprecated("Use 'showUpdateWithForce' or 'showUpdateWithConfirmation' instead.")));
+@end
+
+
+@interface ATAppUpdater : NSObject
+
+/** Delegate to handle the user's actions when prompted to update. */
+@property (nonatomic, weak) id <ATAppUpdaterDelegate> delegate;
 
 /** Set the UIAlertView title. NSLocalizedString() supported. */
 @property (nonatomic, weak) NSString *alertTitle;
@@ -52,5 +57,15 @@ __attribute((deprecated("Use 'showUpdateWithForce' or 'showUpdateWithConfirmatio
 
 /** Set the UIAlertView cancel button's title. NSLocalizedString() supported. */
 @property (nonatomic, weak) NSString *alertCancelButtonTitle;
+
+
+/** Shared instance. [ATAppUpdater sharedUpdater] */
++ (id)sharedUpdater;
+
+/** Checks for newer version and show alert without a cancel button. */
+- (void)showUpdateWithForce;
+
+/** Checks for newer version and show alert with a cancel button. */
+- (void)showUpdateWithConfirmation;
 
 @end
