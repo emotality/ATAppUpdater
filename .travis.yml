@@ -1,7 +1,0 @@
-language: objective-c
-osx_image: xcode8.3
-xcode_sdk: iphonesimulator10.3
-before_install:
-    - brew update
-    - brew install xctool
-script: xctool -project Example/ATAppUpdater.xcodeproj -scheme ATAppUpdater -sdk iphonesimulator10.3 build test
