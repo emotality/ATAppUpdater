@@ -93,7 +93,7 @@
             //not showing dialog, if prompted for this version already
             BOOL showDialog = [versionPrompted isEqualToString:version] ? NO : YES;
             if (showDialog) {
-                [[self alertUpdateForVersion:version withForce:NO] show];
+                [self alertUpdateForVersion:version withForce:NO];
                 NSDictionary *newInfo = @{keyPromptInfo_version : version,
                                           keyPromptInfo_date: [NSDate date]
                                           };
