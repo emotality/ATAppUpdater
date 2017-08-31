@@ -84,7 +84,7 @@
     
     [self checkNewAppVersion:^(BOOL newVersion, NSString *version) {
         if (newVersion){
-            NSString *keyUD_versionPromptInfo = @"versionUpdateInfo";
+            NSString *keyUD_versionPromptInfo = @"versionPromptInfo";
             NSString *keyPromptInfo_version = @"version";
             NSString *keyPromptInfo_date = @"promptedAt";
             NSDictionary *info = [[NSUserDefaults standardUserDefaults] objectForKey:keyUD_versionPromptInfo];
