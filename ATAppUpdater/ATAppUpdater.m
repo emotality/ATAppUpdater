@@ -77,6 +77,33 @@
     }];
 }
 
+- (void)showUpdateWithConfirmationOnce
+{
+    BOOL hasConnection = [self hasConnection];
+    if (!hasConnection) return;
+    
+    [self checkNewAppVersion:^(BOOL newVersion, NSString *version) {
+        if (newVersion){
+            NSString *keyUD_versionPromptInfo = @"versionUpdateInfo";
+            NSString *keyPromptInfo_version = @"version";
+            NSString *keyPromptInfo_date = @"promptedAt";
+            NSDictionary *info = [[NSUserDefaults standardUserDefaults] objectForKey:keyUD_versionPromptInfo];
+            NSString *versionPrompted = info[keyPromptInfo_version];
+            
+            //not showing dialog, if prompted for this version already
+            BOOL showDialog = [versionPrompted isEqualToString:version] ? NO : YES;
+            if (showDialog) {
+                [[self alertUpdateForVersion:version withForce:NO] show];
+                NSDictionary *newInfo = @{keyPromptInfo_version : version,
+                                          keyPromptInfo_date: [NSDate date]
+                                          };
+                [[NSUserDefaults standardUserDefaults] setObject:newInfo forKey:keyUD_versionPromptInfo];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+        }
+    }];
+}
+
 
 #pragma mark - Private Methods
 
