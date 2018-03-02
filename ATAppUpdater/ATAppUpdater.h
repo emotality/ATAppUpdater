@@ -68,4 +68,7 @@
 /** Checks for newer version and show alert with a cancel button. */
 - (void)showUpdateWithConfirmation;
 
+/** Checks for newer version and show alert with a cancel button once per version. */
+- (void)showUpdateWithConfirmationOnce;
+
 @end
