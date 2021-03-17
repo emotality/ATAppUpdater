@@ -130,7 +130,8 @@ NSString *appStoreURL = nil;
     NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
     NSString *bundleIdentifier = bundleInfo[@"CFBundleIdentifier"];
     NSString *currentVersion = bundleInfo[@"CFBundleShortVersionString"];
-    NSURL *lookupURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/lookup?bundleId=%@", bundleIdentifier]];
+    NSURL *lookupURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/lookup?bundleId=%@&t=%f",
+                                             bundleIdentifier, [NSDate.date timeIntervalSince1970]]];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
