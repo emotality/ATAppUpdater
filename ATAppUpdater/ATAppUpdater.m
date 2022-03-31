@@ -130,8 +130,11 @@ NSString *appStoreURL = nil;
     NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
     NSString *bundleIdentifier = bundleInfo[@"CFBundleIdentifier"];
     NSString *currentVersion = bundleInfo[@"CFBundleShortVersionString"];
-    NSURL *lookupURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/lookup?bundleId=%@&t=%f",
-                                             bundleIdentifier, [NSDate.date timeIntervalSince1970]]];
+    
+    NSLocale *currentLocale = [NSLocale currentLocale];
+    NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+    NSURL *lookupURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/lookup?bundleId=%@&t=%f&country=%@",
+                                             bundleIdentifier, [NSDate.date timeIntervalSince1970],countryCode]];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
@@ -184,11 +187,24 @@ NSString *appStoreURL = nil;
         [alert addAction:cancelAction];
     }
     
-    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:alert animated:YES completion:^{
-        if ([self.delegate respondsToSelector:@selector(appUpdaterDidShowUpdateDialog)]) {
-            [self.delegate appUpdaterDidShowUpdateDialog];
+    UIWindow        *foundWindow = nil;
+    NSArray         *windows = [[UIApplication sharedApplication] windows];
+    
+    for (UIWindow   *window in windows) {
+        if (window.isKeyWindow) {
+            foundWindow = window;
+            break;
         }
-    }];
+    }
+    
+    if (foundWindow)
+    {
+        [foundWindow.rootViewController presentViewController:alert animated:YES completion:^{
+            if ([self.delegate respondsToSelector:@selector(appUpdaterDidShowUpdateDialog)]) {
+                [self.delegate appUpdaterDidShowUpdateDialog];
+            }
+        }];
+    }
 }
 
 @end
